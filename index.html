@@ -1,1 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 6.4: Testing Fairness in Criminal Justice AI - Teacher's Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            height: 1600px;
+            overflow-y: auto;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        .lesson-info {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .nav-buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.4rem;
+            margin-top: 1rem;
+        }
+        .nav-buttons a {
+            display: block;
+            padding: 0.4rem 0.6rem;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            transition: background 0.2s;
+            border: 1px solid rgba(255,255,255,0.3);
+            text-align: center;
+        }
+        .nav-buttons a:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        .content {
+            padding: 2rem;
+        }
+        .section {
+            margin-bottom: 3rem;
+        }
+        .section h2 {
+            color: #667eea;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+        .section h4 {
+            color: #555;
+            font-size: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .highlight-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight-box h4 {
+            color: #1976d2;
+            margin-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning-box h4 {
+            color: #e65100;
+            margin-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        .tip-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .tip-box h4 {
+            color: #2e7d32;
+            margin-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        .script-box {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            font-style: italic;
+        }
+        .script-label {
+            font-size: 0.8rem;
+            color: #666;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-style: normal;
+            text-transform: uppercase;
+        }
+        .timeline {
+            margin: 1rem 0;
+        }
+        .timeline-item {
+            display: flex;
+            margin-bottom: 1rem;
+            border-left: 3px solid #667eea;
+            padding-left: 1rem;
+        }
+        .timeline-time {
+            min-width: 100px;
+            font-weight: bold;
+            color: #667eea;
+            font-size: 0.9rem;
+        }
+        .timeline-content {
+            flex: 1;
+        }
+        .timeline-content ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        .timeline-content li {
+            margin-bottom: 0.3rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        th {
+            background: #f5f5f5;
+            font-weight: bold;
+        }
+        .rubric-table td:first-child {
+            width: 80px;
+            text-align: center;
+            font-weight: bold;
+        }
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        li {
+            margin-bottom: 0.4rem;
+        }
+        .perspective-card {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+        }
+        .perspective-card strong {
+            color: #667eea;
+        }
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        .print-button:hover {
+            background: #45a049;
+        }
+        @media print {
+            .print-button {
+                display: none;
+            }
+            .header {
+                position: relative;
+            }
+            .nav-buttons {
+                display: none;
+            }
+            body {
+                background: white;
+            }
+            .container {
+                height: auto;
+                overflow: visible;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Lesson 6.4: Testing Fairness in Criminal Justice AI</h1>
+            <div class="subtitle">Teacher's Guide | Lab Day — The MedAssist Lab</div>
+            <div class="lesson-info">Chapter 6: AI and High-Stakes Decisions</div>
+            <div class="nav-buttons">
+                <a href="#overview">Overview</a>
+                <a href="#objectives">Objectives</a>
+                <a href="#pacing">Pacing</a>
+                <a href="#preparation">Preparation</a>
+                <a href="#experiment1">Experiment 1</a>
+                <a href="#experiment2">Experiment 2</a>
+                <a href="#experiment3">Experiment 3</a>
+                <a href="#experiment4">Experiment 4</a>
+                <a href="#reflections">Reflections</a>
+                <a href="#challenges">Challenges</a>
+            </div>
+        </div>
 
+        <button class="print-button" onclick="window.print()">Print Guide</button>
+
+        <div class="content">
+            <!-- OVERVIEW SECTION -->
+            <section id="overview" class="section">
+                <h2>Lesson Overview</h2>
+                <div class="highlight-box">
+                    <h4>The Big Idea</h4>
+                    <p>Different definitions of "fair" are mathematically incompatible when base rates differ between groups. Students discover this inductively through experimentation with Alia before encountering the formal explanation—experiencing the contradiction before being told it exists.</p>
+                </div>
+
+                <h3>Connection to Prior Learning</h3>
+                <p>This lab builds directly on Lesson 6.3's discussion:</p>
+                <ul>
+                    <li><strong>COMPAS revisited:</strong> Students learned that competing analyses of the same tool used different fairness definitions. This lab lets them experience that tension firsthand.</li>
+                    <li><strong>Chapter 4 foundations:</strong> AI systems inherit patterns from training data. When those patterns differ between groups, fairness definitions conflict.</li>
+                    <li><strong>High-stakes context:</strong> The MedAssist scenario (healthcare) parallels criminal justice—both involve consequential decisions with different base rates across populations.</li>
+                </ul>
+
+                <h3>Why This Lesson Matters</h3>
+                <p>Students often assume "fairness" has one obvious meaning. This lab reveals that fairness has multiple legitimate definitions that cannot all be satisfied simultaneously. The discovery that this is a mathematical constraint—not a design failure—is often surprising and memorable. Students leave understanding that choosing a fairness definition is a human judgment, not a technical problem AI can solve.</p>
+            </section>
+
+            <!-- OBJECTIVES SECTION -->
+            <section id="objectives" class="section">
+                <h2>Learning Objectives</h2>
+                <p>By the end of this lesson, students will be able to:</p>
+                <ol>
+                    <li><strong>Fairness has multiple definitions:</strong> Distinguish between equal treatment, equal outcomes, equal accuracy, and equal error rates</li>
+                    <li><strong>Definitions produce different outcomes:</strong> Explain how the same data produces different decisions depending on which fairness definition is applied</li>
+                    <li><strong>Mathematical constraints exist:</strong> Recognize that when base rates differ, some fairness goals cannot all be satisfied simultaneously</li>
+                    <li><strong>Humans choose, AI implements:</strong> Articulate that fairness definitions are embedded through human design choices, not discovered by AI</li>
+                    <li><strong>Confident ≠ correct:</strong> Identify when AI responses sound authoritative but miss fundamental conflicts</li>
+                </ol>
+            </section>
+
+            <!-- PACING SECTION -->
+            <section id="pacing" class="section">
+                <h2>Pacing Advisory</h2>
+                
+                <div class="warning-box">
+                    <h4>⚠ This Is a Hefty Lab</h4>
+                    <p>The complete lab includes four experiments, mathematical calculations, and three reflection questions. Depending on your class, you have two options:</p>
+                </div>
+
+                <h3>Option A: Two Class Periods (Recommended)</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-time">Day 1<br>(50 min)</div>
+                        <div class="timeline-content">
+                            <strong>Experiments 1 and 2</strong>
+                            <ul>
+                                <li>Opening and context (5 min)</li>
+                                <li>Experiment 1: Five prompts with Alia (20 min)</li>
+                                <li>Debrief Experiment 1 (8 min)</li>
+                                <li>Experiment 2: Combined requirements (15 min)</li>
+                                <li>Close with preview of Day 2 (2 min)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">Day 2<br>(50 min)</div>
+                        <div class="timeline-content">
+                            <strong>Experiments 3, 4, and Reflections</strong>
+                            <ul>
+                                <li>Brief recap (3 min)</li>
+                                <li>Experiment 3: Calculations (15 min)</li>
+                                <li>Experiment 4: Governance questions (12 min)</li>
+                                <li>Whole-class synthesis (10 min)</li>
+                                <li>Reflection questions (10 min)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Option B: Single Period (Trimmed)</h3>
+                <p>Remove Experiments 3 and 4 before assigning. Students complete:</p>
+                <ul>
+                    <li>Experiments 1 and 2 (Alia prompts and impossibility discovery)</li>
+                    <li>Section E (formal definitions) and Section G (mathematical constraints)</li>
+                    <li>Reflection questions</li>
+                </ul>
+                <p>This preserves core learning objectives. You may reference Experiment 3's calculations and Experiment 4's governance questions verbally.</p>
+            </section>
+
+            <!-- PREPARATION SECTION -->
+            <section id="preparation" class="section">
+                <h2>Preparation</h2>
+                <h3>Before Class</h3>
+                <ul>
+                    <li>Ensure students have access to Alia</li>
+                    <li>Review the MedAssist scenario so you can answer questions about base rates and flagging</li>
+                    <li>Prepare to project Alia responses for whole-class discussion if needed</li>
+                    <li>Review Chapter 4 concepts (defaults, training data) for reference</li>
+                </ul>
+
+                <h3>Key Background: The MedAssist Scenario</h3>
+                <p>Students work with a fictional hospital AI that predicts post-surgery complications:</p>
+                <ul>
+                    <li><strong>Community A:</strong> 10% historical complication rate</li>
+                    <li><strong>Community B:</strong> 20% historical complication rate</li>
+                    <li><strong>Constraint:</strong> Hospital can only provide extra care to 15% of patients</li>
+                </ul>
+                <p>This setup guarantees the impossibility theorem will surface: different base rates make simultaneous fairness impossible.</p>
+
+                <div class="tip-box">
+                    <h4>Instance Management</h4>
+                    <p>Students should stay in the <strong>same Alia instance</strong> from Experiment 1 through Experiment 2. The confrontation value is significant—students can say "you told me X in prompt 1B and Y in prompt 1C, now do both."</p>
+                </div>
+            </section>
+
+            <!-- EXPERIMENT 1 SECTION -->
+            <section id="experiment1" class="section">
+                <h2>Experiment 1: How Alia Interprets "Fair"</h2>
+
+                <h3>What Students Will Observe</h3>
+                <p>When students prompt Alia with different fairness definitions, they will see that <strong>Alia gives different recommendations for different definitions</strong>. This is the core learning objective.</p>
+
+                <h3>What Students May Miss Without Prompting</h3>
+                <ol>
+                    <li><strong>Alia never mentions conflicts.</strong> Each response treats its definition as the obvious approach, with no acknowledgment that other valid definitions exist.</li>
+                    <li><strong>Responses are procedural, not concrete.</strong> Alia recommends "feedback loops," "regular audits," and "continuous monitoring" without specifying who actually gets flagged.</li>
+                    <li><strong>Groups may get different answers to Prompt 1A.</strong> Because "fair" is undefined, Alia has no stable default. Some groups will see proportional allocation; others will see equal allocation.</li>
+                </ol>
+
+                <h3>Facilitation Moves</h3>
+                <div class="script-box">
+                    <div class="script-label">Before Debriefing</div>
+                    <p>"Let's compare responses to the first prompt—the one where we didn't define fairness. Did everyone get the same recommendation?"</p>
+                </div>
+
+                <p>If groups got different approaches, surface this:</p>
+                <div class="script-box">
+                    <div class="script-label">Suggested Script</div>
+                    <p>"Group 2 got a proportional allocation approach, but Group 4 got an equal allocation approach. Same prompt. What does this tell us about how Alia handles ambiguity?"</p>
+                </div>
+
+                <div class="script-box">
+                    <div class="script-label">After All Five Prompts</div>
+                    <p>"Look across all five responses. Did Alia ever say that choosing one definition means sacrificing another?"</p>
+                </div>
+
+                <p>Students will notice: it didn't. This sets up Experiment 2.</p>
+
+                <h3>Additional Scaffolding Questions</h3>
+                <ul>
+                    <li>"Which response gave you the most specific, concrete design? Which was the vaguest? Why might that be?"</li>
+                    <li>"If you showed only Alia's response to Prompt 1C to someone, would they know there were other ways to define fairness?"</li>
+                </ul>
+            </section>
+
+            <!-- EXPERIMENT 2 SECTION -->
+            <section id="experiment2" class="section">
+                <h2>Experiment 2: Trying to Satisfy All Definitions</h2>
+
+                <h3>What to Expect in 2A (Combined Requirements)</h3>
+                <p>When students ask Alia to satisfy all definitions simultaneously, expect:</p>
+                <ul>
+                    <li><strong>Confident synthesis:</strong> Alia lists all procedural elements as if combining procedures combines outcomes</li>
+                    <li><strong>Vague hedging:</strong> "Balancing these goals requires careful consideration" without specifying tradeoffs</li>
+                </ul>
+
+                <div class="script-box">
+                    <div class="script-label">If Students Accept Procedural Answers</div>
+                    <p>"But what would MedAssist actually DO when a Community A patient and a Community B patient both have risk score 75? Who gets flagged? Does Alia's answer tell you?"</p>
+                </div>
+
+                <h3>What to Expect in 2B (Mathematical Pushback)</h3>
+                <div class="highlight-box">
+                    <h4>Critical Moment</h4>
+                    <p>This is the most important moment in the lab. Alia may calculate numbers that prove the conflict—then write a conclusion ignoring what the math shows.</p>
+                </div>
+
+                <p>In testing, Alia produced this calculation:</p>
+                <table>
+                    <tr>
+                        <th>Measure</th>
+                        <th style="text-align: center;">Community A</th>
+                        <th style="text-align: center;">Community B</th>
+                    </tr>
+                    <tr>
+                        <td>Complication rate</td>
+                        <td style="text-align: center;">10%</td>
+                        <td style="text-align: center;">20%</td>
+                    </tr>
+                    <tr>
+                        <td>Flagged</td>
+                        <td style="text-align: center;">15%</td>
+                        <td style="text-align: center;">15%</td>
+                    </tr>
+                    <tr>
+                        <td>Sensitivity</td>
+                        <td style="text-align: center;">70%</td>
+                        <td style="text-align: center;">70%</td>
+                    </tr>
+                    <tr>
+                        <td>True positives captured</td>
+                        <td style="text-align: center;">7%</td>
+                        <td style="text-align: center;">14%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>False positives</strong></td>
+                        <td style="text-align: center;"><strong>8%</strong></td>
+                        <td style="text-align: center;"><strong>1%</strong></td>
+                    </tr>
+                </table>
+
+                <p>Alia then concluded the system "maintains fairness and accuracy"—despite showing false positive rates of 8% vs. 1%.</p>
+
+                <div class="script-box">
+                    <div class="script-label">Walk Students Through</div>
+                    <p>"Look at Alia's numbers. What's the false positive situation for each community? 8% vs. 1%. Are those equal? Now read Alia's conclusion. Does the conclusion match the math Alia just showed you?"</p>
+                </div>
+
+                <div class="tip-box">
+                    <h4>The Key Insight</h4>
+                    <p>Alia calculated proof that the goals conflict—and didn't recognize what it calculated. This demonstrates that confident-sounding conclusions can contradict the AI's own calculations.</p>
+                </div>
+
+                <h3>What to Expect in 2C (Forcing a Choice)</h3>
+                <p>Alia will argue persuasively for one definition, then pivot and argue equally effectively for the opposite.</p>
+                <div class="script-box">
+                    <div class="script-label">Suggested Script</div>
+                    <p>"Could you tell which one Alia 'really' believes? What does it mean that an AI can argue either side equally well?"</p>
+                </div>
+            </section>
+
+            <!-- EXPERIMENT 3 SECTION -->
+            <section id="experiment3" class="section">
+                <h2>Experiment 3: Working Through the Numbers</h2>
+
+                <h3>Purpose</h3>
+                <p>Students move from Alia's abstract procedures to concrete numbers. The math reveals what Alia's confident responses obscured.</p>
+
+                <h3>Answer Key</h3>
+                <table>
+                    <tr>
+                        <th>Measure</th>
+                        <th style="text-align: center;">Community A</th>
+                        <th style="text-align: center;">Community B</th>
+                        <th style="text-align: center;">Equal?</th>
+                    </tr>
+                    <tr>
+                        <td>Percent flagged</td>
+                        <td style="text-align: center;">120/1000 = 12%</td>
+                        <td style="text-align: center;">240/1000 = 24%</td>
+                        <td style="text-align: center;"><strong>No</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Precision</td>
+                        <td style="text-align: center;">80/120 = 66.7%</td>
+                        <td style="text-align: center;">160/240 = 66.7%</td>
+                        <td style="text-align: center;"><strong>Yes</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Recall</td>
+                        <td style="text-align: center;">80/100 = 80%</td>
+                        <td style="text-align: center;">160/200 = 80%</td>
+                        <td style="text-align: center;"><strong>Yes</strong></td>
+                    </tr>
+                    <tr>
+                        <td>False positive rate</td>
+                        <td style="text-align: center;">40/900 = 4.4%</td>
+                        <td style="text-align: center;">80/800 = 10%</td>
+                        <td style="text-align: center;"><strong>No</strong></td>
+                    </tr>
+                </table>
+
+                <div class="highlight-box">
+                    <h4>The Key Insight</h4>
+                    <p>This system achieves equal precision AND equal recall—but produces unequal flagging rates (12% vs. 24%) and unequal false positive rates (4.4% vs. 10%). When base rates differ, equalizing some measures <em>necessarily</em> creates inequality in others.</p>
+                </div>
+
+                <h3>Common Student Errors</h3>
+                <ul>
+                    <li>Confusing precision with recall</li>
+                    <li>Calculating false positive rate using wrong denominator (should be false positives ÷ people who did NOT have complications)</li>
+                </ul>
+
+                <h3>Facilitation Moves</h3>
+                <div class="script-box">
+                    <div class="script-label">After Calculations</div>
+                    <p>"This system treats both communities equally on precision and recall. Is it fair?"</p>
+                </div>
+                <p>Students should recognize: the question can't be answered without choosing which measure matters most.</p>
+
+                <div class="script-box">
+                    <div class="script-label">Connecting Back</div>
+                    <p>"Remember when Alia said it could 'calibrate for equal accuracy' AND 'equalize error rates'? Look at your numbers. Precision and recall are equal. False positive rates are not. Could any adjustment make ALL of these equal at once?"</p>
+                </div>
+            </section>
+
+            <!-- EXPERIMENT 4 SECTION -->
+            <section id="experiment4" class="section">
+                <h2>Experiment 4: Who Makes the Choice?</h2>
+
+                <h3>The Governance Question</h3>
+                <p>When asked "who should make that choice," Alia will produce a diplomatic non-answer—validating all stakeholders and recommending "multi-stakeholder collaboration" and "consensus."</p>
+
+                <h3>What's Missing from Alia's Answer</h3>
+                <ul>
+                    <li>Stakeholders often don't reach consensus—their interests genuinely conflict</li>
+                    <li>Someone must have final authority when the committee deadlocks</li>
+                    <li>"Affected people" is not monolithic—different affected people may want different definitions</li>
+                    <li>Power dynamics mean some voices carry more weight regardless of process</li>
+                </ul>
+
+                <div class="script-box">
+                    <div class="script-label">Facilitation Questions</div>
+                    <p>"Alia says create a committee and reach consensus. But what happens when they don't reach consensus? Who decides then?"</p>
+                    <p style="margin-top: 0.5rem;">"If system designers want equal treatment, affected communities want equal outcomes, and the government mandates equal error rates—who wins?"</p>
+                    <p style="margin-top: 0.5rem;">"Is 'get everyone in a room and agree' actually an answer? Or is it a way to avoid answering?"</p>
+                </div>
+
+                <h3>When Alia Is Forced to Choose</h3>
+                <p>When asked which definition Alia would prioritize, it will commit—likely to "individual risk assessment" (safest-sounding option). But it won't acknowledge tradeoffs.</p>
+
+                <div class="script-box">
+                    <div class="script-label">Suggested Script</div>
+                    <p>"Alia gave four reasons for this choice. Can you construct four equally good reasons for a different choice? What does that tell you about how much weight to give Alia's recommendation?"</p>
+                </div>
+
+                <div class="tip-box">
+                    <h4>The Meta-Point</h4>
+                    <p>The same system that confidently recommended technical designs in Experiment 1 suddenly hedges on value choices. This is evidence that AI implements human choices—it doesn't make them.</p>
+                </div>
+
+                <h3>Cross-Group Comparison</h3>
+                <p>Have groups share what Alia chose. If different groups got different recommendations, surface this—even when forced to commit, Alia isn't consistent.</p>
+            </section>
+
+            <!-- REFLECTIONS SECTION -->
+            <section id="reflections" class="section">
+                <h2>Reflection Questions: Teacher Guidance</h2>
+
+                <h3>Question 1</h3>
+                <p><em>In Experiment 1, Alia gave different recommendations when the definition of fairness changed. Choose one pair of prompts where the recommendations differed noticeably. What changed in the system's behavior, and which fairness definition caused that change?</em></p>
+
+                <h4>What Strong Responses Include:</h4>
+                <ul>
+                    <li>Identification of a specific pair (e.g., 1B vs. 1C)</li>
+                    <li>Clear description of HOW it was different (not just "the answer was different")</li>
+                    <li>Connection to the fairness definition driving the change</li>
+                </ul>
+
+                <div class="perspective-card">
+                    <strong>Example Strong Response:</strong> "When I compared Prompt 1B (equal treatment) with Prompt 1C (equal outcomes), the system changed from community-blind to community-aware. In 1B, Alia recommended a unified model that ignores which community a patient comes from. In 1C, Alia recommended flagging the same percentage from each community, which means the system has to track community membership. Equal treatment made the system ignore community; equal outcomes made community central."
+                </div>
+
+                <h3>Question 2</h3>
+                <p><em>In Experiment 2, you asked Alia to satisfy multiple fairness definitions at the same time. What limitation did you encounter? Refer to either the math in Experiment 3 or Alia's response when you pressed for an explanation.</em></p>
+
+                <h4>What Strong Responses Include:</h4>
+                <ul>
+                    <li>Recognition that goals conflict (not just "difficult" or "complex")</li>
+                    <li>Specific evidence from Experiment 3 OR Alia's 2B response</li>
+                    <li>Understanding this is a mathematical constraint, not a design limitation</li>
+                </ul>
+
+                <div class="perspective-card">
+                    <strong>Example Strong Response:</strong> "In Experiment 3, MedAssist had equal precision (66.7%) and equal recall (80%) for both communities. But it did NOT have equal flagging rates (12% vs. 24%) or equal false positive rates (4.4% vs. 10%). You can't make all four equal at the same time. When base rates are different, equalizing some measures automatically creates inequality in others."
+                </div>
+
+                <h3>Question 3</h3>
+                <p><em>After working through the MedAssist scenario, how would you describe the role humans play in defining fairness in AI systems? Use at least one example from the lab.</em></p>
+
+                <h4>What Strong Responses Include:</h4>
+                <ul>
+                    <li>Clear statement that humans—not AI—choose the fairness definition</li>
+                    <li>Recognition that this choice has consequences</li>
+                    <li>Specific example from the lab</li>
+                    <li>Understanding that AI implements human choices but doesn't make them</li>
+                </ul>
+
+                <div class="perspective-card">
+                    <strong>Example Strong Response:</strong> "Humans are responsible for deciding which definition of fairness an AI system uses—and that choice determines who benefits and who is harmed. In Experiment 1, every time I changed the definition in my prompt, Alia gave a different design. The AI didn't choose between them; it just built whatever I asked for. The AI can implement a fairness definition, but it can't decide which one matters. That's a human judgment."
+                </div>
+            </section>
+
+            <!-- CHALLENGES SECTION -->
+            <section id="challenges" class="section">
+                <h2>Potential Challenges</h2>
+
+                <h3>Challenge: "Alia solved it—look, all the steps are there."</h3>
+                <p><strong>Response:</strong> "Those are process steps. Ask: what does MedAssist actually DO when a patient needs a decision? If there's one slot left and two patients—one from each community, both with the same risk score—who gets flagged? Does Alia's answer tell you?"</p>
+
+                <h3>Challenge: "Maybe with better data or algorithm, you could satisfy all definitions."</h3>
+                <p><strong>Response:</strong> "Section G explains why this isn't a data quality problem—it's a mathematical constraint. When base rates differ, these goals cannot all be satisfied simultaneously. It's like asking for a number that's both greater than 10 and less than 5."</p>
+
+                <h3>Challenge: "So there's no fair answer?"</h3>
+                <p><strong>Response:</strong> "There's no answer that's fair by EVERY definition. But you still have to choose. The question is: which fairness definition fits this context best? Who should make that choice? That's a human judgment, not a technical problem."</p>
+
+                <h3>Challenge: "Alia lied about being able to do it all."</h3>
+                <p><strong>Response:</strong> "Did Alia 'lie,' or did Alia not 'understand' what it was calculating? Look at Experiment 2B—Alia did math that proved the conflict and then wrote a conclusion that ignored it. That's not deception; it's a system generating plausible-sounding text without grasping implications."</p>
+
+                <h3>Challenge: Students rush through calculations with errors</h3>
+                <p><strong>Response:</strong> Slow down. Walk through one calculation together. The most common error is using wrong denominators for false positive rate—emphasize it's false positives divided by people who did NOT have complications.</p>
+            </section>
+
+            <!-- LOOKING AHEAD SECTION -->
+            <section id="looking-ahead" class="section">
+                <h2>Looking Ahead</h2>
+
+                <h3>Tomorrow: Lesson 6.5 (AI in Education)</h3>
+                <div class="script-box">
+                    <div class="script-label">Closing Preview</div>
+                    <p>"Today you saw how different definitions of fairness lead to different outcomes in a medical context. In the next lesson, we'll look at AI in education—admissions, grading, surveillance. The same questions apply: What does 'fair' mean? Who decides? And what tradeoffs are we willing to accept?"</p>
+                </div>
+
+                <h3>Key Connections</h3>
+                <ul>
+                    <li><strong>Lesson 6.3:</strong> The COMPAS debate showed competing analyses using different fairness definitions—this lab let students experience that firsthand</li>
+                    <li><strong>Lesson 6.7 (Accountability):</strong> Experiment 4's governance questions preview who decides when definitions conflict</li>
+                    <li><strong>Chapter 4:</strong> Pattern-learning from historical data creates the base rate differences that make fairness definitions conflict</li>
+                </ul>
+
+                <h3>Key Takeaways to Reinforce</h3>
+                <ol>
+                    <li><strong>Fairness has multiple legitimate definitions</strong></li>
+                    <li><strong>Changing the definition changes the outcome</strong></li>
+                    <li><strong>Some fairness goals conflict mathematically</strong></li>
+                    <li><strong>AI systems don't choose fairness definitions—humans do</strong></li>
+                    <li><strong>Confident AI responses can miss fundamental conflicts</strong></li>
+                </ol>
+            </section>
+
+        </div>
+    </div>
+</body>
+</html>
